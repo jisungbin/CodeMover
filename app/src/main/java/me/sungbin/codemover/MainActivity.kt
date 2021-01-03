@@ -26,13 +26,10 @@ class MainActivity : AppCompatActivity() {
             override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
                 val value = snapshot.getValue(String::class.java)
                 Logger.w("onChildAdded", value)
+                database.reference.removeValue()
             }
 
-            override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
-                val value = snapshot.getValue(String::class.java)
-                Logger.w("onChildChanged", value)
-            }
-
+            override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {}
             override fun onChildRemoved(snapshot: DataSnapshot) {}
             override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {}
             override fun onCancelled(error: DatabaseError) {}
