@@ -25,7 +25,7 @@ class DialogAdapter(private val view: RecyclerView) :
 
     private lateinit var onPathSelectedListener: OnPathSelectedListener
 
-    private val defaultPath = "${StorageUtil.sdcard}/GitMessengerBot"
+    private val defaultPath = "${StorageUtil.sdcard}/loco"
     private var contentList = ArrayList<File?>()
     private val context = view.context
 
