@@ -8,6 +8,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.sungbin.androidutils.extensions.get
+import com.sungbin.androidutils.util.Logger
 import com.sungbin.androidutils.util.StorageUtil
 import java.io.File
 import java.util.*
@@ -16,8 +17,7 @@ import java.util.*
  * Created by root on 9/7/17.
  */
 
-// from https://github.com/FirzenYogesh/FileListerDialog
-class DialogAdapter(private val view: PathDialogView) :
+class DialogAdapter(private val view: RecyclerView) :
     RecyclerView.Adapter<DialogAdapter.ContentListViewHolder>() {
 
     interface OnPathSelectedListener {
@@ -25,25 +25,33 @@ class DialogAdapter(private val view: PathDialogView) :
     }
 
     private lateinit var onPathSelectedListener: OnPathSelectedListener
-    private val defaultPath = "${StorageUtil.sdcard}/loco"
-    private var contentList = ArrayList<File>()
+
+    private val defaultPath = "${StorageUtil.sdcard}/GitMessengerBot"
+    private var contentList = ArrayList<File?>()
     private val context = view.context
 
     fun setOnFolderSelectedListener(onFolderSelectedListener: (String) -> Unit) {
-        this.onPathSelectedListener = object : OnPathSelectedListener {
+        this.onPathSelectedListener = object : DialogAdapter.OnPathSelectedListener {
             override fun onPathSelected(path: String) {
                 onFolderSelectedListener(path)
             }
         }
     }
 
-    fun start() {
+    fun init() {
         contentListener(File(defaultPath))
+    }
+
+    fun goToBackPath() {
+        val path = contentList[1]?.parent ?: defaultPath
+        Logger.w(path)
+        contentListener(File(path))
     }
 
     private fun contentListener(path: File) {
         contentList.clear()
-        contentList.addAll(path.listFiles() ?: return)
+        contentList.add(null)
+        contentList.addAll(path.parentFile?.listFiles() ?: return)
         notifyDataSetChanged()
         view.scrollToPosition(0)
     }
@@ -54,16 +62,17 @@ class DialogAdapter(private val view: PathDialogView) :
     @SuppressLint("UseCompatLoadingForDrawables")
     override fun onBindViewHolder(viewHolder: ContentListViewHolder, position: Int) {
         val content = contentList[position]
-        if (content.isDirectory) {
-            viewHolder.icon.setImageDrawable(context.getDrawable(R.drawable.ic_baseline_folder_24))
+        if (content == null) {
+            viewHolder.icon.setImageDrawable(context.getDrawable(R.drawable.ic_baseline_arrow_back_24))
+            viewHolder.name.text = context.getString(R.string.dialog_goto_back_path)
         } else {
-            viewHolder.icon.setImageDrawable(context.getDrawable(R.drawable.ic_baseline_insert_drive_file_24))
+            if (content.isDirectory) {
+                viewHolder.icon.setImageDrawable(context.getDrawable(R.drawable.ic_baseline_folder_24))
+            } else {
+                viewHolder.icon.setImageDrawable(context.getDrawable(R.drawable.ic_baseline_insert_drive_file_24))
+            }
+            viewHolder.name.text = content.name
         }
-        viewHolder.name.text = content.name
-    }
-
-    fun goToDefaultPath() {
-        contentListener(File(defaultPath))
     }
 
     inner class ContentListViewHolder(view: View) : RecyclerView.ViewHolder(view),
@@ -78,10 +87,14 @@ class DialogAdapter(private val view: PathDialogView) :
 
         override fun onClick(v: View) {
             val content = contentList[adapterPosition]
-            if (content.isDirectory) {
-                contentListener(content)
+            if (content == null) {
+                goToBackPath()
             } else {
-                onPathSelectedListener.onPathSelected(content.path)
+                if (content.isDirectory) {
+                    contentListener(content)
+                } else {
+                    onPathSelectedListener.onPathSelected(content.path)
+                }
             }
         }
     }

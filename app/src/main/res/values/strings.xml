@@ -1,8 +1,10 @@
 <resources>
-    <string name="app_name">CodeMover</string>
+    <string name="app_name">CodeMover!</string>
 
-    <string name="dialog_goto_default_path">기본 경로로 이동</string>
+    <string name="dialog_goto_back_path">이전 경로로</string>
     <string name="dialog_choose_file">파일 선택</string>
 
     <string name="image_description_content_type">content_type</string>
+
+    <string name="main_need_permission">권한이 필요하다구!</string>
 </resources>
