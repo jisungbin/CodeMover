@@ -14,7 +14,7 @@
         android:id="@+id/iv_icon"
         android:layout_width="48dp"
         android:layout_height="48dp"
-        android:contentDescription="@string/image_description_folder"
+        android:contentDescription="@string/image_description_content_type"
         android:src="@drawable/ic_baseline_folder_24"
         app:tint="@color/purple_200" />
 

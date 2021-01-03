@@ -2,13 +2,13 @@ package me.sungbin.codemover
 
 import android.Manifest
 import android.os.Bundle
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
-import com.sungbin.androidutils.util.Logger
 import com.sungbin.androidutils.util.PermissionUtil
 
 class MainActivity : AppCompatActivity() {
@@ -25,7 +25,10 @@ class MainActivity : AppCompatActivity() {
         database.reference.addChildEventListener(object : ChildEventListener {
             override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
                 val value = snapshot.getValue(String::class.java)
-                Logger.w("onChildAdded", value)
+
+                val dialog = AlertDialog.Builder(applicationContext)
+                dialog.setView(R.layout.layout_dialog)
+
                 database.reference.removeValue()
             }
 
