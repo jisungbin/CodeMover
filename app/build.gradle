@@ -34,6 +34,7 @@ android {
 dependencies {
     implementation platform('com.google.firebase:firebase-bom:26.1.1')
     implementation 'com.google.firebase:firebase-database-ktx'
+    implementation 'com.github.sungbin5304:AndroidUtils:4.2.3'
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation 'androidx.core:core-ktx:1.3.2'
