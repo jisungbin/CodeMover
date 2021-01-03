@@ -8,7 +8,6 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.sungbin.androidutils.extensions.get
-import com.sungbin.androidutils.util.Logger
 import com.sungbin.androidutils.util.StorageUtil
 import java.io.File
 import java.util.*
@@ -43,15 +42,14 @@ class DialogAdapter(private val view: RecyclerView) :
     }
 
     fun goToBackPath() {
-        val path = contentList[1]?.parent ?: defaultPath
-        Logger.w(path)
+        val path = File(contentList[1]?.parent ?: defaultPath).parent!!
         contentListener(File(path))
     }
 
     private fun contentListener(path: File) {
         contentList.clear()
         contentList.add(null)
-        contentList.addAll(path.parentFile?.listFiles() ?: return)
+        contentList.addAll(path.listFiles() ?: return)
         notifyDataSetChanged()
         view.scrollToPosition(0)
     }

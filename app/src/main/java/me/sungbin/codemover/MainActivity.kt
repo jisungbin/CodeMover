@@ -11,13 +11,11 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.sungbin.androidutils.extensions.get
-import com.sungbin.androidutils.util.PermissionUtil
-import com.sungbin.androidutils.util.StorageUtil
+import com.sungbin.androidutils.util.*
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var alert: AlertDialog
-    private lateinit var adapter: DialogAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,16 +33,23 @@ class MainActivity : AppCompatActivity() {
 
                 val view = layoutInflater.inflate(R.layout.layout_dialog, null)
                 val recyclerView = view[R.id.rv_view, RecyclerView::class.java]
-                adapter = DialogAdapter(recyclerView)
+                val adapter = DialogAdapter(recyclerView)
                 adapter.init()
-                adapter.setOnFolderSelectedListener {
-                    StorageUtil.save(it, value)
+                adapter.setOnFolderSelectedListener { code ->
+                    StorageUtil.save(code, value)
                     alert.cancel()
+                    ToastUtil.show(
+                        applicationContext,
+                        getString(R.string.main_apply_code),
+                        ToastLength.SHORT,
+                        ToastType.SUCCESS
+                    )
                 }
                 recyclerView.adapter = adapter
                 val dialog = AlertDialog.Builder(this@MainActivity)
                 dialog.setTitle(getString(R.string.dialog_choose_file))
                 dialog.setView(view)
+                dialog.setCancelable(false)
                 alert = dialog.create()
                 alert.show()
 
