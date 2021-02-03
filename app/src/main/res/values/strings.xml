@@ -8,4 +8,5 @@
 
     <string name="main_need_permission">권한이 필요하다구!</string>
     <string name="main_apply_code">코드 적용 완료!</string>
+    <string name="main_thanks">잘 써줘서 고마워</string>
 </resources>
