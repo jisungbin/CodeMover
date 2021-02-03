@@ -16,7 +16,7 @@
         android:layout_height="48dp"
         android:contentDescription="@string/image_description_content_type"
         android:src="@drawable/ic_baseline_folder_24"
-        app:tint="@color/purple_200" />
+        app:tint="@color/colorAccent" />
 
     <TextView
         android:id="@+id/tv_name"
@@ -25,7 +25,7 @@
         android:layout_marginStart="@dimen/margin_default"
         android:gravity="center_vertical"
         android:text="@string/app_name"
-        android:textColor="@color/colorBlack"
+        android:textColor="@color/colorPrimary"
         android:textSize="20sp" />
 
 </LinearLayout>

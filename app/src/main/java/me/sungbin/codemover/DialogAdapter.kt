@@ -10,7 +10,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.sungbin.androidutils.extensions.get
 import com.sungbin.androidutils.util.StorageUtil
 import java.io.File
-import java.util.*
 
 /**
  * Created by root on 9/7/17.
@@ -30,7 +29,7 @@ class DialogAdapter(private val view: RecyclerView) :
     private val context = view.context
 
     fun setOnFolderSelectedListener(onFolderSelectedListener: (String) -> Unit) {
-        this.onPathSelectedListener = object : DialogAdapter.OnPathSelectedListener {
+        this.onPathSelectedListener = object : OnPathSelectedListener {
             override fun onPathSelected(path: String) {
                 onFolderSelectedListener(path)
             }
@@ -73,7 +72,8 @@ class DialogAdapter(private val view: RecyclerView) :
         }
     }
 
-    inner class ContentListViewHolder(view: View) : RecyclerView.ViewHolder(view),
+    inner class ContentListViewHolder(view: View) :
+        RecyclerView.ViewHolder(view),
         View.OnClickListener {
 
         val name = view[R.id.tv_name, TextView::class.java]

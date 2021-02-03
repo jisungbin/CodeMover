@@ -2,11 +2,11 @@
     <string name="app_name">CodeMover!</string>
 
     <string name="dialog_goto_back_path">이전 경로로</string>
-    <string name="dialog_choose_file">파일 선택</string>
 
     <string name="image_description_content_type">content_type</string>
 
     <string name="main_need_permission">권한이 필요하다구!</string>
     <string name="main_apply_code">코드 적용 완료!</string>
     <string name="main_thanks">잘 써줘서 고마워</string>
+    <string name="close">닫기</string>
 </resources>

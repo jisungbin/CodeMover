@@ -4,6 +4,7 @@ import android.Manifest
 import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DataSnapshot
@@ -11,7 +12,11 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.sungbin.androidutils.extensions.get
-import com.sungbin.androidutils.util.*
+import com.sungbin.androidutils.util.PermissionUtil
+import com.sungbin.androidutils.util.StorageUtil
+import com.sungbin.androidutils.util.ToastLength
+import com.sungbin.androidutils.util.ToastType
+import com.sungbin.androidutils.util.ToastUtil
 
 class MainActivity : AppCompatActivity() {
 
@@ -21,10 +26,16 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        PermissionUtil.request(this,
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+
+        PermissionUtil.request(
+            this,
             getString(R.string.main_need_permission),
-            arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                Manifest.permission.READ_EXTERNAL_STORAGE))
+            arrayOf(
+                Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                Manifest.permission.READ_EXTERNAL_STORAGE
+            )
+        )
 
         val database = Firebase.database
         database.reference.addChildEventListener(object : ChildEventListener {
@@ -35,8 +46,8 @@ class MainActivity : AppCompatActivity() {
                 val recyclerView = view[R.id.rv_view, RecyclerView::class.java]
                 val adapter = DialogAdapter(recyclerView)
                 adapter.init()
-                adapter.setOnFolderSelectedListener { code ->
-                    StorageUtil.save(code, value)
+                adapter.setOnFolderSelectedListener { path ->
+                    StorageUtil.save(path, value)
                     alert.cancel()
                     ToastUtil.show(
                         applicationContext,
@@ -47,8 +58,8 @@ class MainActivity : AppCompatActivity() {
                 }
                 recyclerView.adapter = adapter
                 val dialog = AlertDialog.Builder(this@MainActivity)
-                dialog.setTitle(getString(R.string.dialog_choose_file))
                 dialog.setView(view)
+                dialog.setPositiveButton(getString(R.string.close), null)
                 dialog.setCancelable(false)
                 alert = dialog.create()
                 alert.show()
@@ -60,9 +71,6 @@ class MainActivity : AppCompatActivity() {
             override fun onChildRemoved(snapshot: DataSnapshot) {}
             override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {}
             override fun onCancelled(error: DatabaseError) {}
-
         })
-
     }
-
 }
