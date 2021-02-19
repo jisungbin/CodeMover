@@ -3,7 +3,7 @@
 -----
 
 # Download
-[Click](https://github.com/jisungbin/CodeMover/releases/download/1.0.0/app-debug.apk)
+[[Click]](https://github.com/jisungbin/CodeMover/releases/download/1.0.0/app-debug.apk)
 
 # TODO
 1. - [ ] 백그라운드 상태에서도 작동하게 변경
