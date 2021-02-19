@@ -15,7 +15,6 @@ import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import me.sungbin.androidutils.extensions.get
 import me.sungbin.androidutils.extensions.toast
-import me.sungbin.androidutils.util.Logger
 import me.sungbin.androidutils.util.PermissionUtil
 import me.sungbin.androidutils.util.StorageUtil
 
@@ -38,7 +37,6 @@ class MainActivity : AppCompatActivity() {
                 toast(getString(R.string.main_apply_code))
             }
             alert.show()
-            Logger.w("observe", code)
         }
         val view = layoutInflater.inflate(R.layout.layout_dialog, null)
         val recyclerView = view[R.id.rv_view, RecyclerView::class.java]
