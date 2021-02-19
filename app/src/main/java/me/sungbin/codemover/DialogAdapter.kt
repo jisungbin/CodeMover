@@ -7,8 +7,8 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.sungbin.androidutils.extensions.get
-import com.sungbin.androidutils.util.StorageUtil
+import me.sungbin.androidutils.extensions.get
+import me.sungbin.androidutils.util.StorageUtil
 import java.io.File
 
 /**
